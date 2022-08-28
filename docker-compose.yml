@@ -8,3 +8,10 @@ services:
     ports:
       - '3000:3000'
     command: npm run dev
+
+  postgres-db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: senha123
+    ports:
+      - 15432:5432
