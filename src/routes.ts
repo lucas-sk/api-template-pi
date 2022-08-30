@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { CreateUser } from './controllers/CreateUser';
+import { CreateUserController } from './controllers/CreateUserController';
 
 const router = Router();
-const createUser = new CreateUser();
+const createUser = new CreateUserController();
 
-router.post('/user', createUser.handle);
+router.post('/users', createUser.handle);
 
 router.get('/', (req, res) => {
   res.status(200).json({ message: 'hsadasddsadsa' });
