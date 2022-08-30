@@ -1,8 +1,8 @@
-import express, { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
+import express from 'express';
 import { router } from './routes';
 
 const app = express();
+
 app.use(express.json());
 app.use(router);
 
