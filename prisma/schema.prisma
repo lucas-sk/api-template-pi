@@ -10,52 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
-  id         String   @id @default(uuid())
-  nome       String   @db.VarChar(255)
-  email      String   @db.VarChar(255)
-  cpf        String   @unique
-  created_at DateTime @default(now())
-
-  @@map("usuario")
-}
-
-model Pet {
-  id    String  @id @default(uuid())
-  name  String  @db.VarChar(255)
-  idade Int
-  sexo  String
-  raca  String
-  peso  Decimal
-  cor   String
-
-  @@map("pet")
-}
-
-model Endereco {
-  id                String @id @default(uuid())
-  uf                String
-  cidade            String
-  logradouro        String
-  numero            String
-  bairro            String
-  cep               String
-  complemento       String
-  pronto_referencia String
-
-  @@map("endereco")
-}
-
-model Prontuario {
-  id String @id @default(uuid())
-
-  @@map("prontuario")
-}
-
-model Medico {
-  id   String @id @default(uuid())
-  name String @db.VarChar(255)
-  crm  String @unique
-
-  @@map("medico")
+model usuario {
+  id Int @id @default(autoincrement())
+  nome String
+  email String
 }
