@@ -10,8 +10,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model usuario {
-  id Int @id @default(autoincrement())
-  nome String
-  email String
+model Usuario {
+  id          String   @id @default(uuid())
+  nome        String
+  email       String
+  cpf         String   @unique
+  id_endereco String
+  endereco    Endereco @relation(fields: [id_endereco], references: [id])
+  Pet         Pet[]
+
+  @@map("usuario")
+}
+
+model Pet {
+  id         String  @id @default(uuid())
+  nome       String
+  idade      Int
+  sexo       String
+  raca       String
+  peso       Float
+  cor        String
+  id_usuario String
+  usuario    Usuario @relation(fields: [id_usuario], references: [id])
+
+  @@map("pet")
+}
+
+model Endereco {
+  id                String    @id @default(uuid())
+  uf                String
+  cidade            String
+  logradouro        String
+  numero            String
+  bairro            String
+  cep               String
+  complemento       String
+  ponto_referencias String
+  Usuario           Usuario[]
+
+  @@map("endereco")
 }

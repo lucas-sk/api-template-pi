@@ -1,14 +1,6 @@
 version: "3"
 
 services:
-  app:
-    build: .
-    volumes:
-      - .:/usr/app
-    ports:
-      - '3000:3000'
-    command: npm run dev
-
   postgres-db:
     image: postgres
     environment:
