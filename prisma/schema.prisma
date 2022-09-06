@@ -23,7 +23,7 @@ model Usuario {
 }
 
 model Pet {
-  id         String  @id @default(uuid())
+  id         String       @id @default(uuid())
   nome       String
   idade      Int
   sexo       String
@@ -31,7 +31,8 @@ model Pet {
   peso       Float
   cor        String
   id_usuario String
-  usuario    Usuario @relation(fields: [id_usuario], references: [id])
+  usuario    Usuario      @relation(fields: [id_usuario], references: [id])
+  Prontuario Prontuario[]
 
   @@map("pet")
 }
@@ -49,4 +50,54 @@ model Endereco {
   Usuario           Usuario[]
 
   @@map("endereco")
+}
+
+model Prontuario {
+  id               String             @id @default(uuid())
+  id_prescricao    String
+  prescricao       Prescricao         @relation(fields: [id_prescricao], references: [id])
+  id_pet           String
+  pet              Pet                @relation(fields: [id_pet], references: [id])
+  VacinaProntuario VacinaProntuario[]
+
+  @@map("prontuario")
+}
+
+model Prescricao {
+  id          String       @id @default(uuid())
+  medicamento String
+  id_medico   String
+  medico      Medico       @relation(fields: [id_medico], references: [id])
+  Prontuario  Prontuario[]
+
+  @@map("prescricao")
+}
+
+model Medico {
+  id         String       @id @default(uuid())
+  nome       String
+  crm        String
+  Prescricao Prescricao[]
+
+  @@map("medico")
+}
+
+model Vacina {
+  id               String             @id @default(uuid())
+  nome             String
+  data_aplicacao   DateTime
+  substancia       String
+  VacinaProntuario VacinaProntuario[]
+
+  @@map("vacina")
+}
+
+model VacinaProntuario {
+  id            String     @id @default(uuid())
+  id_prontuario String
+  prontuario    Prontuario @relation(fields: [id_prontuario], references: [id])
+  id_vacina     String
+  vacina        Vacina     @relation(fields: [id_vacina], references: [id])
+
+  @@map("vacina_prontuario")
 }
