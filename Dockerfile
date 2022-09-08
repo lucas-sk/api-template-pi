@@ -1,8 +1,8 @@
 FROM node:alpine
 WORKDIR /usr/app
-COPY package*.json ./
-RUN npm install
+COPY package.json ./ yarn.lock ./
+RUN yarn
 COPY . .
-
+RUN yarn generate
 EXPOSE 3000
-CMD [ "npm", "run", "dev"]
+CMD [ "yarn", "dev"]

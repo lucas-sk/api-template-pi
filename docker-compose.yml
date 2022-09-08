@@ -5,13 +5,15 @@ services:
     build: .
     volumes:
       - .:/usr/app
+    depends_on:
+      - postgres-db
     ports:
-      - '3000:3000'
-    command: npm run dev
+      - 3000:3000
+    command: yarn dev
 
   postgres-db:
     image: postgres
     environment:
       POSTGRES_PASSWORD: senha123
     ports:
-      - 15432:5432
+      - 5432:5432
