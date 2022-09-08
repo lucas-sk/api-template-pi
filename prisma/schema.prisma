@@ -13,7 +13,7 @@ datasource db {
 model Usuario {
   id          String   @id @default(uuid())
   nome        String
-  email       String
+  email       String   @unique
   cpf         String   @unique
   id_endereco String
   endereco    Endereco @relation(fields: [id_endereco], references: [id])

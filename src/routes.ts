@@ -1,21 +1,37 @@
-import { Request, Response, Router } from 'express';
-import { PrismaClient } from '@prisma/client';
-import { UserController } from './controller/UserController';
-import { EnderecoController } from './controller/EnderecoController';
+import { Router } from 'express';
+import controller from './controller';
 
 const router = Router();
-const prisma = new PrismaClient();
 
-const usuario = new UserController();
-const endereco = new EnderecoController();
+// ROUTES USER
 
-router.post("/novo/usuario", usuario.createUser);
-router.post("/novo/endereco", endereco.newEndereco);
+// cria usuário
+router.post("/novo/usuario", (req, res) => {
+  controller.usuario.createUser(req, res);
+});
+
+// ----------------------------------------------------------------
+
+// ROUTES ENDERECO
+router.post('/novo/endereco', (req, res) => {
+  controller.endereco.novoEndereco(req, res)
+});
+
+// -----------------------------------------------------------------
+
+// ROUTES PET
+
+// cria pet
+router.post("/novo/pet", (req, res) => {
+    controller.pet.createPet(req, res);
+});
 
 
-
-router.get('/users', (req, res) => {
-  res.status(200).json({ message: 'mdpmddpkmpkdmfdkpm' });
+// ROUTE DEFAULT TESTE
+router.get("/", (req, res) => {
+  console.log("tessteee");
 });
 
 export { router };
+
+
