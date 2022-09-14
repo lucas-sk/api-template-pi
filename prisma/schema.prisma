@@ -101,3 +101,5 @@ model VacinaProntuario {
 
   @@map("vacina_prontuario")
 }
+
+
