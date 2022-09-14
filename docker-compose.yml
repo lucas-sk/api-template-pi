@@ -2,6 +2,7 @@ version: "3"
 
 services:
   app:
+    restart: always
     build: .
     volumes:
       - .:/usr/app
@@ -17,3 +18,5 @@ services:
       POSTGRES_PASSWORD: senha123
     ports:
       - 5432:5432
+    restart: unless-stopped
+

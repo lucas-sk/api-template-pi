@@ -12,7 +12,13 @@ datasource db {
 }
 
 model usuario {
-  id    Int    @id @default(autoincrement())
-  nome  String
-  email String
+  id     Int     @id @default(autoincrement())
+  nome   String
+  email  String
+  gender Gender?
+}
+
+enum Gender {
+  male
+  female
 }
