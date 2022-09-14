@@ -5,7 +5,9 @@ const prisma = new PrismaClient();
 
 export class EnderecoController{
 
-   static novoEndereco = async (request: Request, response: Response) => {
+  // cria novo endereco
+  static novoEndereco = async (request: Request, response: Response) => {
+
     try {
 
       const { uf, cidade, logradouro, numero, bairro, cep, complemento, ponto_referencias } = request.body;
@@ -23,10 +25,25 @@ export class EnderecoController{
         }
       });
       return response.json(endereco);
+
     } catch (error) {
-      return response.json(error)
+
+      return response.json(error);
     }
   }
+
+  // static findAllEndereco = async (request: Request, response: Response) => {
+
+  //   try {
+  //     const { uf, cidade, logradouro, numero, bairro, cep, complemento, ponto_referencias } = request.params;
+  //     const endereco = await prisma.endereco.findMany();
+
+  //     return response.json(endereco);
+  //   } catch (error) {
+  //     return response.json(error);
+
+  //   }
+  // }
 
 }
 
