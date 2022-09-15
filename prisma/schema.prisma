@@ -11,13 +11,11 @@ datasource db {
 }
 
 model Usuario {
-  id          String   @id @default(uuid())
-  nome        String
-  email       String   @unique
-  cpf         String   @unique
-  id_endereco String
-  endereco    Endereco @relation(fields: [id_endereco], references: [id])
-  Pet         Pet[]
+  id    String @id @default(uuid())
+  nome  String
+  email String @unique
+  cpf   String @unique
+  Pet   Pet[]
 
   @@map("usuario")
 }
@@ -26,7 +24,7 @@ model Pet {
   id         String       @id @default(uuid())
   nome       String
   idade      Int
-  sexo       String
+  sexo       Gender
   raca       String
   peso       Float
   cor        String
@@ -35,21 +33,6 @@ model Pet {
   Prontuario Prontuario[]
 
   @@map("pet")
-}
-
-model Endereco {
-  id                String    @id @default(uuid())
-  uf                String
-  cidade            String
-  logradouro        String
-  numero            String
-  bairro            String
-  cep               String
-  complemento       String
-  ponto_referencias String
-  Usuario           Usuario[]
-
-  @@map("endereco")
 }
 
 model Prontuario {
@@ -102,4 +85,8 @@ model VacinaProntuario {
   @@map("vacina_prontuario")
 }
 
-
+enum Gender {
+  masc
+  fem
+  undefined
+}

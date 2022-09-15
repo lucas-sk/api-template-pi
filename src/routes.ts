@@ -6,45 +6,36 @@ const router = Router();
 // ROUTES USER
 
 // cria usuário
-router.post('/usuario', (req, res) => {
+router.post('/users', (req, res) => {
   controller.usuario.createUser(req, res);
 });
 
 // lita todos os usuarios
-router.get('/usuarios', (req, res) => {
+router.get('/users', (req, res) => {
   controller.usuario.findAllUsers(req, res);
 });
 
 // pega usuario pelo id
-router.get('/usuario/:id', (req, res) => {
+router.get('/users/:id', (req, res) => {
   controller.usuario.findUserByID(req, res);
 });
 
 // ----------------------------------------------------------------
 
-// ROUTES ENDERECO
-
-// cria novo endereco
-router.post('/novo/endereco', (req, res) => {
-  controller.endereco.novoEndereco(req, res);
-});
-
-// -----------------------------------------------------------------
-
 // ROUTES PET
 
 // cria pet
-router.post('/user/:id_usuario/pets', (req, res) => {
+router.post('/users/:id_usuario/pets', (req, res) => {
   controller.pet.createPet(req, res);
 });
 
 // pega pet pelo ID do usuario
-router.get('/user/:usuario_id/pets', (req, res) => {
+router.get('/users/:usuario_id/pets', (req, res) => {
   controller.pet.getPetByUserID(req, res);
 });
 
 // pega pet baseado uuid do pet cadastrado no usuario
-router.get('/user/:usuario_id/pet/:pet_id', (req, res) => {
+router.get('/users/:usuario_id/pet/:pet_id', (req, res) => {
   controller.pet.getPetOfUser(req, res);
 });
 
@@ -57,6 +48,10 @@ router.get('/', (req, res) => {
   return res.json({
     message: 'falta apenas inic',
   });
+});
+
+router.all('*', (req, res) => {
+  res.status(404).send('<h1>404! Page not found</h1>');
 });
 
 export { router };
