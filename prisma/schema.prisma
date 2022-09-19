@@ -89,5 +89,4 @@ model VacinaProntuario {
 enum Gender {
   masc
   fem
-  undefined
 }
