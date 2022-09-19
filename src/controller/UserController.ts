@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { checkNamePass } from '../utils/checkNamePass';
+
 const prisma = new PrismaClient();
 
 export class UserController {
@@ -8,19 +10,24 @@ export class UserController {
     try {
       const { nome, email, cpf, senha } = request.body;
 
+      if (checkNamePass(nome, senha)) {
+        return response.json({ message: 'nome e senha não pode ser vazio' });
+      }
+
       const user = await prisma.usuario.create({
         data: {
           nome,
           email,
           cpf,
-          senha
+          senha,
         },
       });
 
       return response.json(user);
     } catch (error) {
+      console.log(error);
       return response.json({
-        message: 'Verifique os dados',
+        message: 'o cpf ou email já está cadastrado',
       });
     }
   };
