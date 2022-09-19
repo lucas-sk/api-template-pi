@@ -15,6 +15,7 @@ model Usuario {
   nome  String
   email String @unique
   cpf   String @unique
+  senha String
   Pet   Pet[]
 
   @@map("usuario")
