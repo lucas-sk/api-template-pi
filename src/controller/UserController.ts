@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { checkNamePass } from '../utils/checkNamePass';
 import { checkEmail } from '../utils/checkEmail';
+import { checkCPF } from '../utils/checkCPF';
 
 const prisma = new PrismaClient();
 
@@ -13,6 +14,10 @@ export class UserController {
 
       if (checkNamePass(nome, senha)) {
         return response.json({ message: 'nome e senha não pode ser vazio' });
+      }
+
+      if (checkCPF(cpf)) {
+        return response.json({ message: 'cpf não é valido' });
       }
 
       if (checkEmail(email)) {
