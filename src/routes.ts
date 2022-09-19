@@ -1,44 +1,35 @@
 import { Router } from 'express';
-import controller from './controller';
+import { CreatePetController } from './controller/CreatePetController';
+import { CreateUserController } from './controller/CreateUserController';
+import { FindAllPetsController } from './controller/FindAllPetsController';
+import { FindAllUsersController } from './controller/FindAllUsersController';
+import { FindPetController } from './controller/FindPetController';
+import { FindUserController } from './controller/FindUserController';
 
 const router = Router();
 
+const createUser = new CreateUserController();
+const createPet = new CreatePetController();
+const findUser = new FindUserController();
+const findAllUsers = new FindAllUsersController();
+const findPet = new FindPetController();
+const findAllPets = new FindAllPetsController();
+
 // ROUTES USER
-
 // cria usuário
-router.post('/users', (req, res) => {
-  controller.usuario.createUser(req, res);
-});
-
+router.post('/users', createUser.handle);
 // lita todos os usuarios
-router.get('/users', (req, res) => {
-  controller.usuario.findAllUsers(req, res);
-});
-
+router.get('/users', findAllUsers.handle);
 // pega usuario pelo id
-router.get('/users/:id', (req, res) => {
-  controller.usuario.findUserByID(req, res);
-});
-
+router.get('/users/:id', findUser.handle);
 // ----------------------------------------------------------------
-
 // ROUTES PET
-
 // cria pet
-router.post('/users/:id_usuario/pets', (req, res) => {
-  controller.pet.createPet(req, res);
-});
-
+router.post('/users/:userId/pets', createPet.handle);
 // pega pet pelo ID do usuario
-router.get('/users/:usuario_id/pets', (req, res) => {
-  controller.pet.getPetByUserID(req, res);
-});
-
+router.get('/users/:userId/pets', findAllPets.handle);
 // pega pet baseado uuid do pet cadastrado no usuario
-router.get('/users/:usuario_id/pet/:pet_id', (req, res) => {
-  controller.pet.getPetOfUser(req, res);
-});
-
+router.get('/users/:userId/pet/:petId', findPet.handle);
 // ROUTE DEFAULT TESTE
 router.get('/', (req, res) => {
   return res.json({

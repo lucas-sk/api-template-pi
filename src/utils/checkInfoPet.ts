@@ -1,6 +1,6 @@
 import { Gender } from '@prisma/client';
 
-export function checkInfo(
+export function checkInfoPet(
   name?: string,
   idade?: number,
   sexo?: Gender,
