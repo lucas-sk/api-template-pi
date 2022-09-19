@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { checkInfo } from '../utils/checkInfoPet';
 
 const prisma = new PrismaClient();
 
@@ -9,6 +10,19 @@ export class PetController {
     try {
       const { id_usuario } = request.params;
       const { nome, idade, sexo, raca, peso, cor } = request.body;
+
+      if (checkInfo(nome, idade, sexo, raca, peso, cor)) {
+        return response.json({
+          message: 'nenhuma das informações pode ser vazia ou igual 0',
+        });
+      }
+
+      if (sexo !== 'masc' || sexo !== 'fem') {
+        return response.json({
+          message: 'o sexo só pode ser masc ou fem',
+        });
+      }
+
       const pet = await prisma.pet.create({
         data: {
           nome,
@@ -63,37 +77,6 @@ export class PetController {
       });
 
       return response.json(pet);
-    } catch (error) {
-      return response.json(error);
-    }
-  };
-
-  // edita pet pelo ID
-  static updatePetByID = async (request: Request, response: Response) => {
-    try {
-      const { id } = request.params;
-      const { nome, idade, sexo, raca, peso, cor } = request.body;
-      const pet = await prisma.pet.update({
-        where: {
-          id,
-        },
-        data: {
-          nome,
-          idade,
-          sexo,
-          raca,
-          peso,
-          cor,
-        },
-      });
-
-      if (pet) {
-        return response.json(pet);
-      } else {
-        return response.json({
-          message: 'Nenhum pet encontrado',
-        });
-      }
     } catch (error) {
       return response.json(error);
     }

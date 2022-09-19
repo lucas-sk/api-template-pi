@@ -39,10 +39,6 @@ router.get('/users/:usuario_id/pet/:pet_id', (req, res) => {
   controller.pet.getPetOfUser(req, res);
 });
 
-router.put('/pet/:id', (req, res) => {
-  controller.pet.updatePetByID(req, res);
-});
-
 // ROUTE DEFAULT TESTE
 router.get('/', (req, res) => {
   return res.json({
