@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
 
 export class FindAllUsersController {
@@ -6,14 +7,14 @@ export class FindAllUsersController {
     try {
       const user = await prismaClient.usuario.findMany();
       if (user) {
-        return response.json(user);
+        return response.sendStatus(StatusCodes.ACCEPTED).json(user);
       } else {
-        return response.json({
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
           message: 'Nenhum usuário cadastrado',
         });
       }
     } catch (error) {
-      return response.json(error);
+      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }

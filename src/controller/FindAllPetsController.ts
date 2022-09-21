@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
 
 export class FindAllPetsController {
@@ -12,14 +13,14 @@ export class FindAllPetsController {
       });
 
       if (pet) {
-        return response.json(pet);
+        return response.sendStatus(StatusCodes.ACCEPTED).json(pet);
       } else {
-        return response.json({
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
           message: 'Nenhum pet encontrado',
         });
       }
     } catch (error) {
-      return response.json(error);
+      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }
