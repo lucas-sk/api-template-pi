@@ -4,10 +4,10 @@ import { prismaClient } from '../database/prismaClient';
 export class FindAllPetsController {
   async handle(request: Request, response: Response) {
     try {
-      const { id_usuario } = request.params;
+      const { userId } = request.params;
       const pet = await prismaClient.pet.findMany({
         where: {
-          id_usuario,
+          id_usuario: userId,
         },
       });
 

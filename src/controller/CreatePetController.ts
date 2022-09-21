@@ -1,3 +1,4 @@
+import { Gender } from '@prisma/client';
 import { Request, Response } from 'express';
 import { prismaClient } from '../database/prismaClient';
 import { checkInfoPet } from '../utils/checkInfoPet';
@@ -5,7 +6,7 @@ import { checkInfoPet } from '../utils/checkInfoPet';
 export class CreatePetController {
   async handle(request: Request, response: Response) {
     try {
-      const { id_usuario } = request.params;
+      const { userId } = request.params;
       const { nome, idade, sexo, raca, peso, cor } = request.body;
 
       if (checkInfoPet(nome, idade, sexo, raca, peso, cor)) {
@@ -28,7 +29,7 @@ export class CreatePetController {
           raca,
           peso,
           cor,
-          id_usuario,
+          id_usuario: userId,
         },
       });
 
