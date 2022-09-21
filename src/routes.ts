@@ -3,7 +3,7 @@ import { CreatePetController } from './controller/CreatePetController';
 import { CreateUserController } from './controller/CreateUserController';
 import { FindAllPetsController } from './controller/FindAllPetsController';
 import { FindAllUsersController } from './controller/FindAllUsersController';
-
+import { FindLogUserController } from './controller/FindLogUserController';
 import { FindPetController } from './controller/FindPetController';
 import { FindUserController } from './controller/FindUserController';
 
@@ -15,10 +15,13 @@ const findUser = new FindUserController();
 const findAllUsers = new FindAllUsersController();
 const findPet = new FindPetController();
 const findAllPets = new FindAllPetsController();
+const findLogUser = new FindLogUserController();
 
 // ROUTES USER
 // cria usuário
 router.post('/users', createUser.handle);
+// routa de login de usuario
+router.post('/users/login', findLogUser.handle);
 // lita todos os usuarios
 router.get('/users', findAllUsers.handle);
 // pega usuario pelo id
@@ -38,8 +41,8 @@ router.get('/', (req, res) => {
   });
 });
 
-router.all('*', (req, res) => {
-  res.status(404).send('<h1>404! Page not found</h1>');
-});
+// router.all('*', (req, res) => {
+//   res.status(404).send('<h1>404! Page not found</h1>');
+// });
 
 export { router };

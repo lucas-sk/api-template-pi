@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
+
 import { prismaClient } from '../database/prismaClient';
 import { checkCPF } from '../utils/checkCPF';
 import { checkEmail } from '../utils/checkEmail';
@@ -13,6 +15,8 @@ export class CreateUserController {
         return response.json({ message: 'nome e senha não pode ser vazio' });
       }
 
+      const hashedPassword = await bcrypt.hash(senha, 10);
+
       if (checkCPF(cpf)) {
         return response.json({ message: 'cpf não é valido' });
       }
@@ -26,7 +30,7 @@ export class CreateUserController {
           nome,
           email,
           cpf,
-          senha,
+          senha: hashedPassword,
         },
       });
 
