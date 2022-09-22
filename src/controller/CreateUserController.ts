@@ -19,6 +19,10 @@ export class CreateUserController {
 
       const hashedPassword = await bcrypt.hash(senha, 10);
 
+      if (checkCPF(cpf)) {
+        return response.json({ message: 'cpf não é valido' });
+      }
+
       if (checkCPF(cpf))
         return response
           .sendStatus(StatusCodes.BAD_REQUEST)

@@ -9,7 +9,8 @@ services:
       - postgres-db
     ports:
       - 3000:3000
-    command: yarn dev
+    command: sh -c "yarn deploy && yarn dev"
+
   postgres-db:
     image: postgres
     environment:

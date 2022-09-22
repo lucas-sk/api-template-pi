@@ -5,10 +5,10 @@ import { prismaClient } from '../database/prismaClient';
 export class FindPetController {
   async handle(request: Request, response: Response) {
     try {
-      const { petId, userId } = request.params;
+      const { id, userId } = request.params;
       const pet = await prismaClient.pet.findFirst({
         where: {
-          id: petId,
+          id,
           id_usuario: userId,
         },
       });
