@@ -6,6 +6,7 @@ import { FindAllUsersController } from './controller/FindAllUsersController';
 import { FindLogUserController } from './controller/FindLogUserController';
 import { FindPetController } from './controller/FindPetController';
 import { FindUserController } from './controller/FindUserController';
+import { UpdateUserController } from './controller/UpdateUserController';
 
 const router = Router();
 
@@ -16,6 +17,7 @@ const findAllUsers = new FindAllUsersController();
 const findPet = new FindPetController();
 const findAllPets = new FindAllPetsController();
 const findLogUser = new FindLogUserController();
+const updateUser = new UpdateUserController();
 
 // ROUTES USER
 // cria usuário
@@ -26,6 +28,8 @@ router.post('/users/login', findLogUser.handle);
 router.get('/users', findAllUsers.handle);
 // pega usuario pelo id
 router.get('/users/:id', findUser.handle);
+// atualiza usuário
+router.put('/users/:id', updateUser.handle);
 // ----------------------------------------------------------------
 // ROUTES PET
 // cria pet
