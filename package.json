@@ -9,6 +9,7 @@
     "reset": "prisma migrate reset",
     "studio": "prisma studio",
     "generate": "prisma generate",
+    "deploy": "prisma migrate deploy",
     "migrate": "prisma migrate dev",
     "dev": "ts-node-dev --poll --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts"
   },
