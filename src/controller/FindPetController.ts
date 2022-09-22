@@ -4,11 +4,11 @@ import { prismaClient } from '../database/prismaClient';
 export class FindPetController {
   async handle(request: Request, response: Response) {
     try {
-      const { id, id_usuario } = request.params;
+      const { id, userId } = request.params;
       const pet = await prismaClient.pet.findFirst({
         where: {
           id,
-          id_usuario,
+          id_usuario: userId,
         },
       });
 
