@@ -45,8 +45,8 @@ router.get('/', (req, res) => {
   });
 });
 
-// router.all('*', (req, res) => {
-//   res.status(404).send('<h1>404! Page not found</h1>');
-// });
+router.all('*', (req, res) => {
+  res.status(404).send('<h1>404! Page not found</h1>');
+});
 
 export { router };
