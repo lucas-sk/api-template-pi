@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
 
 export class FindUserController {
@@ -12,14 +13,14 @@ export class FindUserController {
       });
 
       if (user) {
-        return response.json(user);
+        return response.sendStatus(StatusCodes.ACCEPTED).json(user);
       } else {
-        return response.json({
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
           message: 'Usuário não existe',
         });
       }
     } catch (error) {
-      return response.json(error);
+      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }

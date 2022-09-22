@@ -1,24 +1,24 @@
+import { Gender } from '@prisma/client';
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
 import { checkInfoPet } from '../utils/checkInfoPet';
 
 export class CreatePetController {
   async handle(request: Request, response: Response) {
     try {
-      const { id_usuario } = request.params;
+      const { userId } = request.params;
       const { nome, idade, sexo, raca, peso, cor } = request.body;
 
-      if (checkInfoPet(nome, idade, sexo, raca, peso, cor)) {
-        return response.json({
+      if (checkInfoPet(nome, idade, sexo, raca, peso, cor))
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
           message: 'nenhuma das informações pode ser vazia ou igual 0',
         });
-      }
 
-      if (sexo !== 'masc' || sexo !== 'fem') {
-        return response.json({
+      if (sexo !== 'masc' || sexo !== 'fem')
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
           message: 'o sexo só pode ser masc ou fem',
         });
-      }
 
       const pet = await prismaClient.pet.create({
         data: {
@@ -28,15 +28,15 @@ export class CreatePetController {
           raca,
           peso,
           cor,
-          id_usuario,
+          id_usuario: userId,
         },
       });
 
-      return response.json({
+      return response.sendStatus(StatusCodes.CREATED).json({
         message: 'Pet adicionado com sucesso',
       });
     } catch (error) {
-      return response.json(error);
+      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }
