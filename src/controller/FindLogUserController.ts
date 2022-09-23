@@ -19,21 +19,22 @@ export class FindLogUserController {
       const user = await prismaClient.usuario.findFirst({
         where: { email },
       });
-      env.config();
-      const api_key = process.env.SECRETE_KEY;
-      const userEmail  = user?.email;
-      const accessToken = JWT.sign(userEmail, api_key);
 
       if (!user)
         return response
           .status(StatusCodes.BAD_REQUEST)
           .json({ message: 'usúario não encontrado' });
+      env.config();
+
+      const api_key = process.env.SECRETE_KEY;
+      const userEmail = user.email;
+      const accessToken = JWT.sign(userEmail, api_key);
 
       if (await bcrypt.compare(senha, user.senha)) {
         return response.status(StatusCodes.OK).json({
           message: 'Sucess',
-          accessToken: accessToken
-       });
+          accessToken: accessToken,
+        });
       } else {
         return response
           .status(StatusCodes.NON_AUTHORITATIVE_INFORMATION)
