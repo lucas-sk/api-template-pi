@@ -1,3 +1,5 @@
+import JWT from 'jsonwebtoken';
+import env from 'dotenv';
 import { Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
 import bcrypt from 'bcrypt';
@@ -17,6 +19,10 @@ export class FindLogUserController {
       const user = await prismaClient.usuario.findFirst({
         where: { email },
       });
+      env.config();
+      const api_key = process.env.SECRETE_KEY;
+      const userEmail  = user?.email;
+      const accessToken = JWT.sign(userEmail, api_key);
 
       if (!user)
         return response
@@ -24,7 +30,10 @@ export class FindLogUserController {
           .json({ message: 'usúario não encontrado' });
 
       if (await bcrypt.compare(senha, user.senha)) {
-        return response.status(StatusCodes.OK).json({ message: 'Sucess' });
+        return response.status(StatusCodes.OK).json({
+          message: 'Sucess',
+          accessToken: accessToken
+       });
       } else {
         return response
           .status(StatusCodes.NON_AUTHORITATIVE_INFORMATION)
