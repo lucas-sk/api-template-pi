@@ -11,12 +11,12 @@ export class CreatePetController {
       const { nome, idade, sexo, raca, peso, cor } = request.body;
 
       if (checkInfoPet(nome, idade, sexo, raca, peso, cor))
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: 'nenhuma das informações pode ser vazia ou igual 0',
         });
 
-      if (sexo !== 'masc' || sexo !== 'fem')
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
+      if (sexo !== 'masc' && sexo !== 'fem')
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: 'o sexo só pode ser masc ou fem',
         });
 
@@ -32,11 +32,11 @@ export class CreatePetController {
         },
       });
 
-      return response.sendStatus(StatusCodes.CREATED).json({
+      return response.status(StatusCodes.CREATED).json({
         message: 'Pet adicionado com sucesso',
       });
     } catch (error) {
-      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
+      return response.status(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }

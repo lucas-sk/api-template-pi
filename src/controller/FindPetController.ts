@@ -13,9 +13,9 @@ export class FindPetController {
         },
       });
 
-      return response.sendStatus(StatusCodes.ACCEPTED).json(pet);
+      return response.status(StatusCodes.ACCEPTED).json(pet);
     } catch (error) {
-      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
+      return response.status(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }

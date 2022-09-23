@@ -14,7 +14,7 @@ export class CreateUserController {
 
       if (checkNamePass(nome, senha))
         return response
-          .sendStatus(StatusCodes.BAD_REQUEST)
+          .status(StatusCodes.BAD_REQUEST)
           .json({ message: 'nome e senha não pode ser vazio' });
 
       const hashedPassword = await bcrypt.hash(senha, 10);
@@ -25,12 +25,12 @@ export class CreateUserController {
 
       if (checkCPF(cpf))
         return response
-          .sendStatus(StatusCodes.BAD_REQUEST)
+          .status(StatusCodes.BAD_REQUEST)
           .json({ message: 'cpf não é valido' });
 
       if (checkEmail(email))
         return response
-          .sendStatus(StatusCodes.BAD_REQUEST)
+          .status(StatusCodes.BAD_REQUEST)
           .json({ message: 'email não é valido' });
 
       const user = await prismaClient.usuario.create({
@@ -42,9 +42,9 @@ export class CreateUserController {
         },
       });
 
-      return response.sendStatus(StatusCodes.CREATED).json(user);
+      return response.status(StatusCodes.CREATED).json(user);
     } catch (error) {
-      return response.sendStatus(StatusCodes.BAD_GATEWAY).json({
+      return response.status(StatusCodes.BAD_GATEWAY).json({
         message: 'verifique os dados',
       });
     }
