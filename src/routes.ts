@@ -8,8 +8,10 @@ import { FindPetController } from './controller/FindPetController';
 import { FindUserController } from './controller/FindUserController';
 import { UpdateUserController } from './controller/UpdateUserController';
 
+import AuthMiddleware from './middleware/AuthMiddleware';
 
-import authMiddleware from './middleware/AuthMiddleware';
+
+
 
 const router = Router();
 
@@ -28,7 +30,7 @@ router.post('/users', createUser.handle);
 // routa de login de usuario
 router.post('/users/login', findLogUser.handle);
 // lita todos os usuarios
-router.get('/users', authMiddleware,findAllUsers.handle);
+router.get('/users',AuthMiddleware ,findAllUsers.handle);
 // pega usuario pelo id
 router.get('/users/:id', findUser.handle);
 // atualiza usuário
