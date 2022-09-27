@@ -7,14 +7,14 @@ export class FindAllUsersController {
     try {
       const user = await prismaClient.usuario.findMany();
       if (user) {
-        return response.sendStatus(StatusCodes.ACCEPTED).json(user);
+        return response.status(StatusCodes.ACCEPTED).json(user);
       } else {
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: 'Nenhum usuário cadastrado',
         });
       }
     } catch (error) {
-      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
+      return response.status(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }
