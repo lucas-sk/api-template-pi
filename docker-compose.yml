@@ -2,15 +2,22 @@ version: "3"
 
 services:
   app:
-    image: app
     build: .
     volumes:
-      - .:/usr/app
+      - .:/app
     depends_on:
       - postgres-db
     ports:
       - 3000:3000
     command: sh -c "yarn deploy && yarn dev"
+
+  studio:
+    build: .
+    depends_on:
+      - postgres-db
+    ports:
+      - 5556:5556
+    command: yarn studio
 
   postgres-db:
     image: postgres
