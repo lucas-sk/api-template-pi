@@ -6,6 +6,12 @@ import { FindAllUsersController } from './controller/FindAllUsersController';
 import { FindLogUserController } from './controller/FindLogUserController';
 import { FindPetController } from './controller/FindPetController';
 import { FindUserController } from './controller/FindUserController';
+import { UpdateUserController } from './controller/UpdateUserController';
+
+import AuthMiddleware from './middleware/AuthMiddleware';
+
+
+
 
 const router = Router();
 
@@ -15,6 +21,7 @@ const findUser = new FindUserController();
 const findAllUsers = new FindAllUsersController();
 const findPet = new FindPetController();
 const findAllPets = new FindAllPetsController();
+const updateUser = new UpdateUserController();
 const findLogUser = new FindLogUserController();
 
 // ROUTES USER
@@ -23,9 +30,11 @@ router.post('/users', createUser.handle);
 // routa de login de usuario
 router.post('/users/login', findLogUser.handle);
 // lita todos os usuarios
-router.get('/users', findAllUsers.handle);
+router.get('/users',AuthMiddleware ,findAllUsers.handle);
 // pega usuario pelo id
 router.get('/users/:id', findUser.handle);
+// atualiza usuário
+router.put('/users/:id', updateUser.handle);
 // ----------------------------------------------------------------
 // ROUTES PET
 // cria pet
@@ -41,8 +50,8 @@ router.get('/', (req, res) => {
   });
 });
 
-// router.all('*', (req, res) => {
-//   res.status(404).send('<h1>404! Page not found</h1>');
-// });
+router.all('*', (req, res) => {
+  res.status(404).send('<h1>404! Page not found</h1>');
+});
 
 export { router };

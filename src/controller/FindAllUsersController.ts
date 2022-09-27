@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
 
 export class FindAllUsersController {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response, next: NextFunction) {
     try {
       const user = await prismaClient.usuario.findMany();
       if (user) {
