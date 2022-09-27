@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
 import { checkCPF } from '../utils/checkCPF';
 import { checkEmail } from '../utils/checkEmail';
@@ -11,15 +12,21 @@ export class UpdateUserController {
       const { nome, email, cpf, senha } = request.body;
 
       if (checkNamePass(nome, senha)) {
-        return response.json({ message: 'nome e senha não pode ser vazio' });
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({ 
+          message: 'Nome e senha não podem ser vazios' 
+        });
       }
 
       if (checkCPF(cpf)) {
-        return response.json({ message: 'cpf não é valido' });
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({ 
+          message: 'CPF não é valido' 
+        });
       }
 
       if (checkEmail(email)) {
-        return response.json({ message: 'email não é valido' });
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({ 
+          message: 'Email não é valido' 
+        });
       }
 
       const user = await prismaClient.usuario.update({
@@ -33,9 +40,9 @@ export class UpdateUserController {
           senha    
       }
     });
-      return response.json(user);
+      return response.sendStatus(StatusCodes.OK).json(user);
     } catch (error) {
-      return response.json({
+      return response.sendStatus(StatusCodes.BAD_GATEWAY).json({
         message: 'verifique os dados',
       });
     }
