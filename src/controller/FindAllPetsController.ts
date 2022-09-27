@@ -13,14 +13,14 @@ export class FindAllPetsController {
       });
 
       if (pet) {
-        return response.sendStatus(StatusCodes.ACCEPTED).json(pet);
+        return response.status(StatusCodes.ACCEPTED).json(pet);
       } else {
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: 'Nenhum pet encontrado',
         });
       }
     } catch (error) {
-      return response.sendStatus(StatusCodes.BAD_GATEWAY).json(error);
+      return response.status(StatusCodes.BAD_GATEWAY).json(error);
     }
   }
 }

@@ -26,11 +26,11 @@ export class UpdateUserController {
         where: {
           id
         },
-        data: { 
-          nome, 
+        data: {
+          nome,
           email,
-          cpf,  
-          senha    
+          cpf,
+          senha
       }
     });
       return response.json(user);
