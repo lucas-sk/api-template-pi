@@ -19,6 +19,14 @@ services:
       - 5556:5556
     command: yarn studio
 
+  nginx:
+    image: nginx
+    ports:
+        - 80:80
+    depends_on:
+      - studio
+      - app
+
   postgres-db:
     image: postgres
     environment:
