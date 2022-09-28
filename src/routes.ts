@@ -7,6 +7,7 @@ import { FindLogUserController } from './controller/FindLogUserController';
 import { FindPetController } from './controller/FindPetController';
 import { FindUserController } from './controller/FindUserController';
 import { UpdateUserController } from './controller/UpdateUserController';
+import { UpdatePetController } from './controller/UpdatePetController';
 
 import AuthMiddleware from './middleware/AuthMiddleware';
 
@@ -23,6 +24,7 @@ const findPet = new FindPetController();
 const findAllPets = new FindAllPetsController();
 const updateUser = new UpdateUserController();
 const findLogUser = new FindLogUserController();
+const updatePet = new UpdatePetController();
 
 // ROUTES USER
 // cria usuário
@@ -43,6 +45,9 @@ router.post('/users/:userId/pets', createPet.handle);
 router.get('/users/:userId/pets', findAllPets.handle);
 // pega pet baseado uuid do pet cadastrado no usuario
 router.get('/users/:userId/pet/:petId', findPet.handle);
+//atualiza o pet pelo ID
+router.put('/pets/:petId', updatePet.handle);
+//-----------------------------------------------------------------
 // ROUTE DEFAULT TESTE
 router.get('/', (req, res) => {
   return res.json({

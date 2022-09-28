@@ -12,20 +12,20 @@ export class UpdateUserController {
       const { nome, email, cpf, senha } = request.body;
 
       if (checkNamePass(nome, senha)) {
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({ 
-          message: 'Nome e senha não podem ser vazios' 
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
+          message: 'Nome e senha não podem ser vazios'
         });
       }
 
       if (checkCPF(cpf)) {
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({ 
-          message: 'CPF não é valido' 
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
+          message: 'CPF não é valido'
         });
       }
 
       if (checkEmail(email)) {
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({ 
-          message: 'Email não é valido' 
+        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
+          message: 'Email não é valido'
         });
       }
 
@@ -33,11 +33,11 @@ export class UpdateUserController {
         where: {
           id
         },
-        data: { 
-          nome, 
+        data: {
+          nome,
           email,
-          cpf,  
-          senha    
+          cpf,
+          senha
       }
     });
       return response.sendStatus(StatusCodes.OK).json(user);
