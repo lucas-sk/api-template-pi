@@ -26,7 +26,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         message: "o token expirou!"
       });
     }
-    console.log(decoded)
     next();
   } catch {
     return res.status(401).json({
