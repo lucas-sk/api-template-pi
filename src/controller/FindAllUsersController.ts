@@ -5,7 +5,7 @@ import { prismaClient } from '../database/prismaClient';
 export class FindAllUsersController {
   async handle(request: Request, response: Response, next: NextFunction) {
     try {
-      const user = await prismaClient.usuario.findMany();
+      const user = await prismaClient.user.findMany();
       if (user) {
         return response.status(StatusCodes.ACCEPTED).json(user);
       } else {

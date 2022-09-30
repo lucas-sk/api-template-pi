@@ -7,39 +7,39 @@ import { checkNamePass } from '../utils/checkNamePass';
 
 export class UpdateUserController {
   async handle(request: Request, response: Response) {
-    try{
+    try {
       const { id } = request.params;
-      const { nome, email, cpf, senha } = request.body;
+      const { name, email, cpf, password } = request.body;
 
-      if (checkNamePass(nome, senha)) {
+      if (checkNamePass(name, password)) {
         return response.sendStatus(StatusCodes.BAD_REQUEST).json({
-          message: 'Nome e senha não podem ser vazios'
+          message: 'Nome e senha não podem ser vazios',
         });
       }
 
       if (checkCPF(cpf)) {
         return response.sendStatus(StatusCodes.BAD_REQUEST).json({
-          message: 'CPF não é valido'
+          message: 'CPF não é valido',
         });
       }
 
       if (checkEmail(email)) {
         return response.sendStatus(StatusCodes.BAD_REQUEST).json({
-          message: 'Email não é valido'
+          message: 'Email não é valido',
         });
       }
 
-      const user = await prismaClient.usuario.update({
+      const user = await prismaClient.user.update({
         where: {
-          id
+          id,
         },
         data: {
-          nome,
+          name,
           email,
           cpf,
-          senha
-      }
-    });
+          password,
+        },
+      });
       return response.sendStatus(StatusCodes.OK).json(user);
     } catch (error) {
       return response.sendStatus(StatusCodes.BAD_GATEWAY).json({

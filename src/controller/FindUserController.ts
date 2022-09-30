@@ -6,7 +6,7 @@ export class FindUserController {
   async handle(request: Request, response: Response) {
     try {
       const { id } = request.params;
-      const user = await prismaClient.usuario.findFirst({
+      const user = await prismaClient.user.findFirst({
         where: {
           id,
         },

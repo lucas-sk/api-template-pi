@@ -1,38 +1,39 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
+
 export class UpdatePetController {
-    async handle (request: Request, response: Response) {
-        try {
-            const { petId } = request.params;
-            const { nome, idade, sexo, raca, peso, cor } = request.body;
+  async handle(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
+      const { name, years, gender, breed, weight, color } = request.body;
 
-            if(sexo){
-              if (sexo !== 'masc' || sexo !== 'fem')
-              return response.status(StatusCodes.BAD_REQUEST).json({
-                message: 'O sexo só pode ser masc ou fem',
-              });
-            }
+      if (gender) {
+        if (gender !== 'masc' || gender !== 'fem')
+          return response.status(StatusCodes.BAD_REQUEST).json({
+            message: 'O gender só pode ser masc ou fem',
+          });
+      }
 
-            const pet = await prismaClient.pet.update({
-              where: {
-                    id : petId
-                },
-              data: {
-                  nome,
-                  idade,
-                  sexo,
-                  raca,
-                  peso,
-                  cor
-                },
-            });
+      const pet = await prismaClient.pet.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          years,
+          gender,
+          breed,
+          weight,
+          color,
+        },
+      });
 
-            return response.status(StatusCodes.OK).json({
-                message: 'Pet adicionado com sucesso',
-            });
-        }   catch (error) {
-            return response.status(StatusCodes.BAD_GATEWAY).json(error);
-        }
+      return response.status(StatusCodes.OK).json({
+        message: 'Pet adicionado com sucesso',
+      });
+    } catch (error) {
+      return response.status(StatusCodes.BAD_GATEWAY).json(error);
     }
+  }
 }

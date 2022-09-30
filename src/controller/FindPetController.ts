@@ -9,7 +9,7 @@ export class FindPetController {
       const pet = await prismaClient.pet.findFirst({
         where: {
           id,
-          id_usuario: userId,
+          userId,
         },
       });
 

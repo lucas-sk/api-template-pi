@@ -8,7 +8,7 @@ export class FindAllPetsController {
       const { userId } = request.params;
       const pet = await prismaClient.pet.findMany({
         where: {
-          id_usuario: userId,
+          userId,
         },
       });
 

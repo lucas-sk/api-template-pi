@@ -1,44 +1,38 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-
 import { prismaClient } from '../database/prismaClient';
 import { checkCPF } from '../utils/checkCPF';
 import { checkEmail } from '../utils/checkEmail';
 import { checkNamePass } from '../utils/checkNamePass';
 import { StatusCodes } from 'http-status-codes';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 export class CreateUserController {
   async handle(request: Request, response: Response) {
     try {
-      const { nome, email, cpf, senha } = request.body;
+      const data: Prisma.UserCreateInput = request.body;
 
-      if (checkNamePass(nome, senha))
+      if (checkNamePass(data.name, data.password))
         return response
           .status(StatusCodes.BAD_REQUEST)
           .json({ message: 'nome e senha não pode ser vazio' });
 
-      const hashedPassword = await bcrypt.hash(senha, 10);
+      const hashedPassword = await bcrypt.hash(data.password, 10);
 
-      if (checkCPF(cpf)) {
-        return response.json({ message: 'cpf não é valido' });
-      }
-
-      if (checkCPF(cpf))
+      if (checkCPF(data.cpf))
         return response
           .status(StatusCodes.BAD_REQUEST)
           .json({ message: 'cpf não é valido' });
 
-      if (checkEmail(email))
+      if (checkEmail(data.email))
         return response
           .status(StatusCodes.BAD_REQUEST)
           .json({ message: 'email não é valido' });
 
-      const user = await prismaClient.usuario.create({
+      const user = await prismaClient.user.create({
         data: {
-          nome,
-          email,
-          cpf,
-          senha: hashedPassword,
+          ...data,
+          password: hashedPassword,
         },
       });
 
