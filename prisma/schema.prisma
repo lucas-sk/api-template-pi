@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,80 +7,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
-  id    String @id @default(uuid())
-  nome  String
-  email String @unique
-  cpf   String @unique
-  senha String
-  Pet   Pet[]
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  cpf      String @unique
+  password String
+  Pet      Pet[]
 
-  @@map("usuario")
+  @@map("users")
 }
 
 model Pet {
-  id         String       @id @default(uuid())
-  nome       String
-  idade      Int
-  sexo       Gender
-  raca       String
-  peso       Float
-  cor        String
-  id_usuario String
-  usuario    Usuario      @relation(fields: [id_usuario], references: [id])
-  Prontuario Prontuario[]
+  id        String      @id @default(uuid())
+  name      String
+  years     Int
+  breed     String
+  weight    Float
+  color     String
+  userId    String
+  gender    Gender
+  user      User        @relation(fields: [userId], references: [id])
+  vetRecord vetRecord[]
 
-  @@map("pet")
+  @@map("pets")
 }
 
-model Prontuario {
+model vetRecord {
   id               String             @id @default(uuid())
-  id_prescricao    String
-  prescricao       Prescricao         @relation(fields: [id_prescricao], references: [id])
-  id_pet           String
-  pet              Pet                @relation(fields: [id_pet], references: [id])
-  VacinaProntuario VacinaProntuario[]
+  prescriptionId   String
+  petId            String
+  pet              Pet                @relation(fields: [petId], references: [id])
+  Prescription     Prescription       @relation(fields: [prescriptionId], references: [id])
+  vaccineVetRecord vaccineVetRecord[]
 
-  @@map("prontuario")
+  @@map("vetRecords")
 }
 
-model Prescricao {
-  id          String       @id @default(uuid())
+model Prescription {
+  id          String      @id @default(uuid())
   medicamento String
-  id_medico   String
-  medico      Medico       @relation(fields: [id_medico], references: [id])
-  Prontuario  Prontuario[]
+  vetId       String
+  vet         vet         @relation(fields: [vetId], references: [id])
+  vetRecord   vetRecord[]
 
-  @@map("prescricao")
+  @@map("prescriptions")
 }
 
-model Medico {
-  id         String       @id @default(uuid())
-  nome       String
-  crm        String
-  Prescricao Prescricao[]
+model vet {
+  id           String         @id @default(uuid())
+  name         String
+  crm          String
+  prescription Prescription[]
 
-  @@map("medico")
+  @@map("vets")
 }
 
-model Vacina {
+model vaccine {
   id               String             @id @default(uuid())
-  nome             String
+  name             String
   data_aplicacao   DateTime
   substancia       String
-  VacinaProntuario VacinaProntuario[]
+  vaccineVetRecord vaccineVetRecord[]
 
-  @@map("vacina")
+  @@map("vaccines")
 }
 
-model VacinaProntuario {
-  id            String     @id @default(uuid())
-  id_prontuario String
-  prontuario    Prontuario @relation(fields: [id_prontuario], references: [id])
-  id_vacina     String
-  vacina        Vacina     @relation(fields: [id_vacina], references: [id])
+model vaccineVetRecord {
+  id          String    @id @default(uuid())
+  vetRecordId String
+  vaccineId   String
+  vetRecord   vetRecord @relation(fields: [vetRecordId], references: [id])
+  vaccine     vaccine   @relation(fields: [vaccineId], references: [id])
 
-  @@map("vacina_prontuario")
+  @@map("vaccineVetRecords")
 }
 
 enum Gender {
