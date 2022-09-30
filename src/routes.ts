@@ -1,38 +1,27 @@
 import { Router } from 'express';
-import { CreatePetController } from './controller/CreatePetController';
-import { CreateUserController } from './controller/CreateUserController';
-import { FindAllPetsController } from './controller/FindAllPetsController';
-import { FindAllUsersController } from './controller/FindAllUsersController';
-import { FindLogUserController } from './controller/FindLogUserController';
-import { FindPetController } from './controller/FindPetController';
-import { FindUserController } from './controller/FindUserController';
-import { UpdateUserController } from './controller/UpdateUserController';
-import { UpdatePetController } from './controller/UpdatePetController';
+import {
+  createPet,
+  createUser,
+  findAllPets,
+  findAllUsers,
+  findPet,
+  findUser,
+  signInUser,
+  updatePet,
+  updateUser,
+} from './controller';
 
 import AuthMiddleware from './middleware/AuthMiddleware';
 
-
-
-
 const router = Router();
-
-const createUser = new CreateUserController();
-const createPet = new CreatePetController();
-const findUser = new FindUserController();
-const findAllUsers = new FindAllUsersController();
-const findPet = new FindPetController();
-const findAllPets = new FindAllPetsController();
-const updateUser = new UpdateUserController();
-const findLogUser = new FindLogUserController();
-const updatePet = new UpdatePetController();
 
 // ROUTES USER
 // cria usuário
 router.post('/users', createUser.handle);
 // routa de login de usuario
-router.post('/users/login', findLogUser.handle);
+router.post('/users/login', signInUser.handle);
 // lita todos os usuarios
-router.get('/users',AuthMiddleware ,findAllUsers.handle);
+router.get('/users', findAllUsers.handle);
 // pega usuario pelo id
 router.get('/users/:id', findUser.handle);
 // atualiza usuário
@@ -46,7 +35,7 @@ router.get('/users/:userId/pets', findAllPets.handle);
 // pega pet baseado uuid do pet cadastrado no usuario
 router.get('/users/:userId/pet/:petId', findPet.handle);
 //atualiza o pet pelo ID
-router.put('/pets/:petId', updatePet.handle);
+router.put('/pets/:id', updatePet.handle);
 //-----------------------------------------------------------------
 // ROUTE DEFAULT TESTE
 router.get('/', (req, res) => {
