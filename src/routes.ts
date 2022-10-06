@@ -1,41 +1,29 @@
 import { Router } from 'express';
-import {
-  createPet,
-  createUser,
-  findAllPets,
-  findAllUsers,
-  findPet,
-  findUser,
-  signInUser,
-  updatePet,
-  updateUser,
-} from './controller';
-
-import AuthMiddleware from './middleware/AuthMiddleware';
+import * as C from './controller';
 
 const router = Router();
 
 // ROUTES USER
 // cria usuário
-router.post('/users', createUser.handle);
+router.post('/users', C.createUser.handle);
 // routa de login de usuario
-router.post('/users/login', signInUser.handle);
+router.post('/users/login', C.signInUser.handle);
 // lita todos os usuarios
-router.get('/users', findAllUsers.handle);
+router.get('/users', C.findAllUsers.handle);
 // pega usuario pelo id
-router.get('/users/:id', findUser.handle);
+router.get('/users/:id', C.findUser.handle);
 // atualiza usuário
-router.put('/users/:id', updateUser.handle);
+router.put('/users/:id', C.updateUser.handle);
 // ----------------------------------------------------------------
 // ROUTES PET
 // cria pet
-router.post('/users/:userId/pets', createPet.handle);
+router.post('/users/:userId/pets', C.createPet.handle);
 // pega pet pelo ID do usuario
-router.get('/users/:userId/pets', findAllPets.handle);
+router.get('/users/:userId/pets', C.findAllPets.handle);
 // pega pet baseado uuid do pet cadastrado no usuario
-router.get('/users/:userId/pet/:petId', findPet.handle);
+router.get('/users/:userId/pet/:petId', C.findPet.handle);
 //atualiza o pet pelo ID
-router.put('/pets/:id', updatePet.handle);
+router.put('/pets/:id', C.updatePet.handle);
 //-----------------------------------------------------------------
 // ROUTE DEFAULT TESTE
 router.get('/', (req, res) => {
