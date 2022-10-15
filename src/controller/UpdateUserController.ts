@@ -3,19 +3,12 @@ import { StatusCodes } from 'http-status-codes';
 import { prismaClient } from '../database/prismaClient';
 import { checkCPF } from '../utils/checkCPF';
 import { checkEmail } from '../utils/checkEmail';
-import { checkNamePass } from '../utils/checkNamePass';
 
 export class UpdateUserController {
   async handle(request: Request, response: Response) {
     try {
       const { id } = request.params;
       const { name, email, cpf, password } = request.body;
-
-      if (checkNamePass(name, password)) {
-        return response.sendStatus(StatusCodes.BAD_REQUEST).json({
-          message: 'Nome e senha não podem ser vazios',
-        });
-      }
 
       if (checkCPF(cpf)) {
         return response.sendStatus(StatusCodes.BAD_REQUEST).json({
