@@ -1,8 +1,9 @@
-FROM node:alpine
-WORKDIR /usr/app
-COPY package.json ./ yarn.lock ./
-RUN yarn
-COPY . .
-RUN yarn generate
-EXPOSE 3000
-CMD [ "yarn", "dev"]
+FROM node:slim
+
+USER node
+
+RUN mkdir -p /home/node/app
+
+WORKDIR /home/node/app
+
+CMD [ ".docker/start.sh"]

@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+
+  # studio:
+  #   build: .
+  # container_name: studio
+  #   depends_on:
+  #     - postgres-db
+  #   ports:
+  #     - 5556:5556
+  #   command: yarn studio
+
+  # nginx:
+  #   image: nginx
+  # container_name: ngnix
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - studio
+  #     - app
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: test
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.docker/dbdata:/var/lib/postgresql/data
